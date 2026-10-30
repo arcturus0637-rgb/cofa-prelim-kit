@@ -19,3 +19,13 @@
 `config/libraries.lock.json`의ReactFlow,DuckDB,MarkItDown,Vitest,Ruff,NetworkX,OR-Tools는사용자가선택한라이브러리입니다. 개인 PC에서 확인한 참고 버전과 원본 주소를 보관했으며 전체 실행 코드를 복사하지는 않았습니다. v1.1은 Git Clone 전용이며 추가 패키지 설치를 하지 않습니다. 제공 환경의 기존 도구를 사용합니다.
 
 추가디버깅/단순화프로젝트는불필요하다고판단했습니다. 이미Superpowers+Matt의진단,code-simplifier+Ponytail+Karpathy의단순화,Caveman의국소수정참고가겹칩니다. 원본의벤치마크수치/토큰절약주장은이키트나대회환경에서재현했다고표시하지않습니다.
+
+
+## v1.2 추가 원본과 적용 범위
+
+- **Trail of Bits**: https://github.com/trailofbits/skills . Property-Based Testing의 SKILL과 참고 문서 5개, 원본 LICENSE를 보관합니다. 원본은 CC BY-SA 4.0입니다. `cofa-test-design`은 이를 대회용으로 각색한 어댑터이며 같은 라이선스, 출처와 변경 사실을 명시합니다. 원본의 프레임워크 추가 제안은 실행하지 않습니다. 기존 런타임/표준 라이브러리 검사로 대체할 수 있습니다.
+- **Vercel**: https://github.com/vercel-labs/agent-skills . React Best Practices의 SKILL, AGENTS, metadata와 rules를 보관합니다. SKILL은 MIT를 선언하지만 고정 커밋에는 LICENSE/NOTICE/COPYING 파일이 없습니다. 이 사실을 LICENSE-DECLARATION.txt에 기록했고 원문/헤더를 유지했습니다. 실제 React/Next.js 과제에서 필요한 지침만 읽습니다. 배포 도구, MCP, 계정, 설치 스크립트는 포함하지 않습니다.
+
+출처별 정확한 커밋과 선택 파일은 sources.lock에 있습니다. 새 원본의 기술 문서를 수동 참고할 뿐 자체 SKILL/agents 설정을 발견 경로에 등록하지 않습니다. Inquisitor MCP, Sentry 전체 팩, Spec-to-Code의 다중 에이전트 실행기는 추가하지 않았습니다. `cofa-reason`은 이 키트의 독립적인 경량 절차입니다. 모델 능력이나 완성률이 향상됐다는 측정 결과를 주장하지 않습니다.
+
+README의 라이선스 예외와 각 파일의 선언을 확인하세요. 루트 MIT는 CC BY-SA 원본이나 그 각색본의 조건을 대체하지 않습니다.

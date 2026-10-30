@@ -1,8 +1,8 @@
 # COFA 예선 개발 키트
 
-처음 공개되는 서비스·코드 과제를 제공된 Codex로 구현하기 위한 **Git Clone 전용 도구함 v1.1.0**입니다. 공개 저장소 [arcturus0637-rgb/cofa-prelim-kit](https://github.com/arcturus0637-rgb/cofa-prelim-kit)를 시험 환경에서 `git clone` 한 번으로 가져옵니다. 스킬·하네스는 추가 다운로드 없이 로컬에서 등록합니다. 제공된 Python 3.10 이상을 사용하며 계정·API 키·MCP·모델 프록시가 필요하지 않습니다.
+처음 공개되는 서비스·코드 과제를 제공된 Codex로 구현하기 위한 **Git Clone 전용 도구함 v1.2.0**입니다. 공개 저장소 [arcturus0637-rgb/cofa-prelim-kit](https://github.com/arcturus0637-rgb/cofa-prelim-kit)를 시험 환경에서 `git clone` 한 번으로 가져옵니다. 스킬·하네스는 추가 다운로드 없이 **그 시험 환경의 과제 폴더에** 등록합니다. 개인 PC의 사전 설치 파일·설정·계정을 가져오는 방식이 아닙니다. 제공된 Python 3.10 이상을 사용하며 계정·API 키·MCP·모델 프록시가 필요하지 않습니다.
 
-선택한 공개 원본 7개를 커밋 단위로 보관하고, 대회에서 사용할 8개 스킬로 연결했습니다. 원본은 `upstream/`에 보관하며 자동 활성화하지 않습니다. React Flow·DuckDB·MarkItDown·Vitest·Ruff·NetworkX·OR-Tools는 제공 환경의 기존 패키지를 확인하는 참고 목록입니다. 이 라이브러리들의 실행 코드·모든 의존성·바이너리가 이 저장소에 포함된 것은 아닙니다. 소스를 Clone해도 실행 준비가 자동으로 끝나는 것은 아닙니다.
+선택한 공개 원본 9개를 커밋 단위로 보관하고, 대회에서 사용할 10개 스킬로 연결했습니다. 원본은 `upstream/`에 보관하며 자동 활성화하지 않습니다. React Flow·DuckDB·MarkItDown·Vitest·Ruff·NetworkX·OR-Tools는 제공 환경의 기존 패키지를 확인하는 참고 목록입니다. 이 라이브러리들의 실행 코드·모든 의존성·바이너리가 이 저장소에 포함된 것은 아닙니다. 소스를 Clone해도 실행 준비가 자동으로 끝나는 것은 아닙니다.
 
 참가자가 외부 자료 취득은 Git Clone만 허용된다고 확인해, v1.0의 pip/npm 선택 설치 기능을 제거했습니다. `libraries`는 이제 **조회 전용**입니다. 원본의 설치 안내나 npx/curl 명령도 수행하지 않습니다. 빌드 과정이 별도 의존성을 내려받는 경우에도 실행 준비가 됐다고 간주하지 않습니다.
 
@@ -11,15 +11,20 @@
 | 역할 | 구성 |
 |---|---|
 | 전체 작업 흐름 | `cofa-prelim`: 문제 분석·핵심 구현·시간 안배·제출 준비 |
-| 디버깅 | Superpowers systematic-debugging + Matt diagnosing-bugs |
+| 문제 분석·선택 | `cofa-reason`: 사실/가정 구분, 완료 조건과 작은 실험으로 구현 선택 |
+| 테스트 설계 | `cofa-test-design`: 실제 동작·경계값·데이터 보존·유효한 속성 검사 |
+| 디버깅 | Superpowers systematic-debugging + Matt diagnosing-bugs; 실패 기록과 조사 전환 |
 | 단순화 | code-simplifier + Ponytail + Karpathy-inspired 지침 |
 | 리뷰 | Matt/Ponytail/Caveman의 변경 범위 중심 리뷰 |
 | 검증 | Superpowers 검증 + 실행 로그·소스 변경 감지 |
 | 데이터·그래프·문서 | 선택한 7개 라이브러리의 기존 설치 상태와 사용 안내 |
 | SQL | Supabase/PostgreSQL 지침; 클라우드 연결은 설치하지 않음 |
+| React 조건부 참고 | Vercel React Best Practices; 실제 React/Next.js 과제에서 필요한 규칙만 참조 |
 | 간결한 대화 | Caveman의 간결성만 적용; 코드·오류·숫자·문서는 압축하지 않음 |
 
 기존 묶음으로 디버깅·단순화·리뷰가 충분히 겹쳐 추가 대형 하네스를 도입하지 않았습니다. 관련 Caveman의 investigate-first·surgical-patch·safe-refactor 등도 원본 참고자료로 보관했습니다. [원본 목록과 변경 범위](docs/SOURCES.ko.md)
+
+v1.2는 반복 실패의 근거/다음 실험 기록, 틀린 주장 정정, 구현/실행/미확인 구분을 보강합니다. 긴 추론문·반복 승인·무한 재시도·필수 다중 에이전트를 요구하지 않습니다. 모델의 추론 성능 향상을 입증한 배포물은 아닙니다. [세부 적용 방법](docs/QUALITY.ko.md)
 
 ## 사전 체험에서 설치
 
@@ -36,7 +41,7 @@ python .cofa-kit/kit.py doctor
 
 실제 과제 폴더 안의 `tools/cofa-prelim-kit`처럼 Clone해도 됩니다. 설치 대상은 과제 폴더이고, 키트 폴더 자체나 그 하위는 설치 대상으로 지정하지 마세요. 키트 폴더에서 앱을 시작하도록 과제 구조를 바꾸지 않습니다.
 
-설치 결과는 `.agents/skills/cofa-*`, `.cofa-kit/`, 기존 내용을 보존한 `AGENTS.md`입니다. 원본 `AGENTS.md`는 `.cofa/AGENTS.before-kit.md`로 보관합니다. 다른 내용의 기존 스킬/키트 파일이 있으면 덮어쓰지 않고 멈춥니다. 같은 버전 재설치는 같은 결과를 냅니다. 전역 Codex 설정은 수정하지 않습니다. 실행 중인 Codex가 스킬을 발견하지 못하면 제공 환경의 안내에 따라 새 세션에서 확인하세요.
+설치 결과는 `.agents/skills/cofa-*`, `.cofa-kit/`, 기존 내용을 보존한 `AGENTS.md`입니다. 원본 `AGENTS.md`는 `.cofa/AGENTS.before-kit.md`로 보관합니다. 다른 내용의 기존 스킬/키트 파일이 있으면 덮어쓰지 않고 멈춥니다. 같은 버전 재설치는 같은 결과를 냅니다. 이전 버전이 이미 등록된 과제에는 다른 파일 충돌로 중단될 수 있습니다. 충돌을 무시해 덮어쓰거나 과제/기록 폴더를 지우지 마세요. 이 설치기는 자동 업그레이드 기능을 제공하지 않습니다. 전역 Codex 설정은 수정하지 않습니다. 실행 중인 Codex가 스킬을 발견하지 못하면 제공 환경의 안내에 따라 새 세션에서 확인하세요.
 
 사전 체험의 작업이 본 과제로 보존된다는 보장은 없습니다. 실제 과제 시작 후 필요하면 다시 Clone하고 로컬 등록하세요. 준비에 드는 시간도 실제 작업 시간에 영향을 줍니다. Python이 없다면 추가로 내려받지 말고 Codex에 저장소의 `skills/cofa-prelim/SKILL.md`를 직접 읽도록 요청하세요. 이 경우 Python CLI의 시간/증거 관리 기능은 사용할 수 없습니다.
 
@@ -114,4 +119,4 @@ python kit.py verify-bundle
 
 [검증 기록](docs/VALIDATION.ko.md)은 이 PC에서 관찰한 결과와 미확인 범위를 구분합니다. 시험장의 Linux/네트워크/권한은 사전 체험에서 확인해야 합니다. [대회 규칙과 시간 계산](docs/EXAM_RULES.ko.md), [작업 흐름](docs/WORKFLOW.ko.md)
 
-원본 7개는 각 원본 라이선스를 유지합니다. 새 하네스·어댑터·스크립트만 루트 MIT 라이선스를 따릅니다. 개인 설정·키·기존 작업 기록·시험 PDF·문제·응시 산출물은 이 공개 배포물에 포함하지 않습니다. `.gitattributes`는 Windows/Linux 간 Clone 시 무결성 해시의 바이트를 유지합니다. [시험 전 공개 저장소 준비](docs/GITHUB.ko.md)
+원본 9개는 각 원본 라이선스를 유지합니다. `cofa-test-design`과 Trail of Bits 원본은 CC BY-SA 4.0이며 출처와 변경 사실을 명시했습니다. 달리 표시하지 않은 새 하네스·어댑터·스크립트는 루트 MIT 라이선스를 따릅니다. 개인 설정·키·기존 작업 기록·시험 PDF·문제·응시 산출물은 이 공개 배포물에 포함하지 않습니다. `.gitattributes`는 Windows/Linux 간 Clone 시 무결성 해시의 바이트를 유지합니다. [시험 전 공개 저장소 준비](docs/GITHUB.ko.md)

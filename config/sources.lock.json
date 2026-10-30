@@ -94,5 +94,34 @@
     "mode": "passive-reference",
     "fetched_at": "2026-10-30T05:26:22.328670+00:00",
     "license_note": "See original LICENSE files in snapshot"
+  },
+  {
+    "id": "trailofbits",
+    "repository": "https://github.com/trailofbits/skills",
+    "commit": "2be6433b39e009cd2b6fd3be1895f6b1faa5af9a",
+    "selected_paths": [
+      "LICENSE",
+      "plugins/property-based-testing/skills/property-based-testing/SKILL.md",
+      "plugins/property-based-testing/skills/property-based-testing/references"
+    ],
+    "snapshot": "upstream/trailofbits",
+    "mode": "passive-reference",
+    "fetched_at": "2026-10-30T15:54:20.537268+00:00",
+    "license_note": "CC-BY-SA-4.0; original LICENSE retained"
+  },
+  {
+    "id": "vercel",
+    "repository": "https://github.com/vercel-labs/agent-skills",
+    "commit": "1a2c79d4e6c4a2283dc2c614b6538cbe1ed5ca62",
+    "selected_paths": [
+      "skills/react-best-practices/SKILL.md",
+      "skills/react-best-practices/AGENTS.md",
+      "skills/react-best-practices/metadata.json",
+      "skills/react-best-practices/rules"
+    ],
+    "snapshot": "upstream/vercel",
+    "mode": "passive-reference",
+    "fetched_at": "2026-10-30T15:54:20.644436+00:00",
+    "license_note": "MIT declared in SKILL frontmatter; no source license file at pinned commit"
   }
 ]
