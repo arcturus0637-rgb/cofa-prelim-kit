@@ -5,6 +5,8 @@ description: "Use before claiming a COFA implementation is fixed, complete, test
 
 # Evidence before completion claims
 
+Before confirmation, use `cofa-explain` to create the participant-requested actual-implementation explanation in the permitted submission document. Check agreement with final code and actual evidence, include that path in handoff, and have the participant confirm its saved presence in the submission list. Finalize documentation before the necessary final checks; documentation changes can stale the conservative fingerprint. This does not authorize answering the later written/oral questions.
+
 Read `.cofa-kit/upstream/superpowers/skills/verification-before-completion/SKILL.md` as technical guidance, under current task permissions and remaining time.
 
 Map each actual must-have requirement to a relevant check. Use `cofa-test-design` when selecting checks or when passing tests may miss the behavior. Run the real command and inspect full output/exit status, test collection, executed count and skips. Failed collection or zero executed cases cannot establish passing behavior. Use `python .cofa-kit/kit.py check --name <name> -- <command>` to retain raw local logs and source freshness markers. A test of the wrong behavior, linter pass, build pass or agent report is not evidence of the requested user flow.

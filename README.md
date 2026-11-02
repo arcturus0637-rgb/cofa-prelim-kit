@@ -1,8 +1,8 @@
 # COFA 예선 개발 키트
 
-처음 공개되는 서비스·코드 과제를 제공된 Codex로 구현하기 위한 **Git Clone 전용 도구함 v1.2.0**입니다. 공개 저장소 [arcturus0637-rgb/cofa-prelim-kit](https://github.com/arcturus0637-rgb/cofa-prelim-kit)를 시험 환경에서 `git clone` 한 번으로 가져옵니다. 스킬·하네스는 추가 다운로드 없이 **그 시험 환경의 과제 폴더에** 등록합니다. 개인 PC의 사전 설치 파일·설정·계정을 가져오는 방식이 아닙니다. 제공된 Python 3.10 이상을 사용하며 계정·API 키·MCP·모델 프록시가 필요하지 않습니다.
+처음 공개되는 서비스·코드 과제를 제공된 Codex로 구현하기 위한 **Git Clone 전용 도구함 v1.3.0**입니다. 공개 저장소 [arcturus0637-rgb/cofa-prelim-kit](https://github.com/arcturus0637-rgb/cofa-prelim-kit)를 시험 환경에서 `git clone` 한 번으로 가져옵니다. 스킬·하네스는 추가 다운로드 없이 **그 시험 환경의 과제 폴더에** 등록합니다. 개인 PC의 사전 설치 파일·설정·계정을 가져오는 방식이 아닙니다. 제공된 Python 3.10 이상을 사용하며 계정·API 키·MCP·모델 프록시가 필요하지 않습니다.
 
-선택한 공개 원본 9개를 커밋 단위로 보관하고, 대회에서 사용할 10개 스킬로 연결했습니다. 원본은 `upstream/`에 보관하며 자동 활성화하지 않습니다. React Flow·DuckDB·MarkItDown·Vitest·Ruff·NetworkX·OR-Tools는 제공 환경의 기존 패키지를 확인하는 참고 목록입니다. 이 라이브러리들의 실행 코드·모든 의존성·바이너리가 이 저장소에 포함된 것은 아닙니다. 소스를 Clone해도 실행 준비가 자동으로 끝나는 것은 아닙니다.
+선택한 공개 원본 9개를 커밋 단위로 보관하고, 대회에서 사용할 13개 스킬로 연결했습니다. 원본은 `upstream/`에 보관하며 자동 활성화하지 않습니다. React Flow·DuckDB·MarkItDown·Vitest·Ruff·NetworkX·OR-Tools는 제공 환경의 기존 패키지를 확인하는 참고 목록입니다. 이 라이브러리들의 실행 코드·모든 의존성·바이너리가 이 저장소에 포함된 것은 아닙니다. 소스를 Clone해도 실행 준비가 자동으로 끝나는 것은 아닙니다.
 
 참가자가 외부 자료 취득은 Git Clone만 허용된다고 확인해, v1.0의 pip/npm 선택 설치 기능을 제거했습니다. `libraries`는 이제 **조회 전용**입니다. 원본의 설치 안내나 npx/curl 명령도 수행하지 않습니다. 빌드 과정이 별도 의존성을 내려받는 경우에도 실행 준비가 됐다고 간주하지 않습니다.
 
@@ -11,6 +11,9 @@
 | 역할 | 구성 |
 |---|---|
 | 전체 작업 흐름 | `cofa-prelim`: 문제 분석·핵심 구현·시간 안배·제출 준비 |
+| 제약 최적화 | `cofa-optimize`: 모델링·배정·스케줄링·가능해/최적해 구분 |
+| 버스·배차·노선 | `cofa-routing`: 직원/정류장/차량 구분, 용량·시간·누락 검사기 |
+| 구현 설명 산출물 | `cofa-explain`: 실제 구현·알고리즘·검증·한계를 설명 파일로 작성 |
 | 문제 분석·선택 | `cofa-reason`: 사실/가정 구분, 완료 조건과 작은 실험으로 구현 선택 |
 | 테스트 설계 | `cofa-test-design`: 실제 동작·경계값·데이터 보존·유효한 속성 검사 |
 | 디버깅 | Superpowers systematic-debugging + Matt diagnosing-bugs; 실패 기록과 조사 전환 |
@@ -25,6 +28,14 @@
 기존 묶음으로 디버깅·단순화·리뷰가 충분히 겹쳐 추가 대형 하네스를 도입하지 않았습니다. 관련 Caveman의 investigate-first·surgical-patch·safe-refactor 등도 원본 참고자료로 보관했습니다. [원본 목록과 변경 범위](docs/SOURCES.ko.md)
 
 v1.2는 반복 실패의 근거/다음 실험 기록, 틀린 주장 정정, 구현/실행/미확인 구분을 보강합니다. 긴 추론문·반복 승인·무한 재시도·필수 다중 에이전트를 요구하지 않습니다. 모델의 추론 성능 향상을 입증한 배포물은 아닙니다. [세부 적용 방법](docs/QUALITY.ko.md)
+
+## 재시험과 v1.3 추가 사항
+
+사용자 전달 일정은 **2026-11-04 수요일 19:00~23:00 KST, 제한 4시간**입니다. 기본 마감과 작업 상한을 갱신했습니다. 서술형 배분의 정확한 분 수는 미확인이어서 기존 30분과 생성 여유 10분은 보수적인 임시값이며 status가 경고합니다. 최신 플랫폼 안내에 따라 start의 시간 옵션을 지정하세요. 이 옵션은 플랫폼 시간을 늘리거나 바꾸지 않습니다.
+
+최적화가 나오면 `cofa-optimize`, 버스/배차라면 `cofa-routing`을 선택합니다. 솔버 없이도 제한된 고정 정류장 모델의 독립 검사는 Python 표준 라이브러리만으로 실행합니다. 최적화 풀이 전체나 OR-Tools 바이너리를 미리 넣은 것은 아닙니다. 실제 문제의 필수 제약은 빠짐없이 별도 확인해야 합니다.
+
+실무 단계에서 `cofa-explain`으로 **실제 만든 것의 구현 설명**을 산출물에 포함합니다. 기본명은 `IMPLEMENTATION.ko.md`이며 제출 문서명이 정해져 있으면 그 형식에 통합합니다. 실제 코드·알고리즘·제약/목표·실행 결과·한계를 설명하고, 참가자가 제출 목록에서 파일을 확인합니다. 제출 확정 이후/후속 서술형에는 AI를 사용하지 않습니다.
 
 ## 사전 체험에서 설치
 
@@ -82,7 +93,7 @@ python .cofa-kit/kit.py libraries --profile analytics
 ## 작업 중 사용
 
 ```bash
-python .cofa-kit/kit.py start --started-at 2026-10-31T10:00:00+09:00 --kind web
+python .cofa-kit/kit.py start --started-at 2026-11-04T19:00:00+09:00 --kind web
 python .cofa-kit/kit.py status
 python .cofa-kit/kit.py require --id R1 --text "실제 과제에서 요구한 기능"
 python .cofa-kit/kit.py check --name unit -- npm test -- --run
@@ -98,7 +109,7 @@ python .cofa-kit/kit.py manual --name manual-ui --result pass --note "참가자�
 python .cofa-kit/kit.py handoff --required-file README.md
 ```
 
-필수 파일명은 과제 기준입니다. `README.md`도 예시입니다. `handoff`는 로컬 체크리스트이며 플랫폼 제출을 수행하지 않습니다. 미리보기에서 저장 상태·제출 목록을 직접 확인하세요.
+설명 문서도 허용된 실제 경로로 `handoff --required-file IMPLEMENTATION.ko.md`에 포함합니다. 필수 파일명은 과제 기준입니다. `README.md`도 예시입니다. `handoff`는 로컬 체크리스트이며 플랫폼 제출을 수행하지 않습니다. 미리보기에서 저장 상태·제출 목록을 직접 확인하세요.
 
 **플랫폼에서 제출물을 확정한 뒤** 다음 명령으로 상태를 기록합니다. 실제 버튼을 누르지 않고 실행하면 잘못된 상태가 기록됩니다.
 

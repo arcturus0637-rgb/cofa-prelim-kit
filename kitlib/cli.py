@@ -24,6 +24,9 @@ def parser():
     c = project_command('start', 'Record actual task-start time; does not start the platform exam')
     c.add_argument('--started-at')
     c.add_argument('--overall-end')
+    c.add_argument('--work-minutes', type=int, help='Current event work cap; does not change platform time')
+    c.add_argument('--oral-minutes', type=int, help='Confirmed oral allocation; 0 only if no oral stage applies')
+    c.add_argument('--generation-reserve-minutes', type=int, help='Local recommended generation reserve')
     c.add_argument('--practice', action='store_true')
     c.add_argument('--kind', choices=('generic', 'web', 'data'), default='generic')
     c = project_command('status', 'Read deadlines and verification freshness')
@@ -89,7 +92,8 @@ def execute(args):
     if a == 'doctor':
         return doctor(project), 0
     if a == 'start':
-        return session.start(project, args.started_at, args.overall_end, args.practice, args.kind), 0
+        return session.start(project, args.started_at, args.overall_end, args.practice, args.kind,
+                             args.work_minutes, args.oral_minutes, args.generation_reserve_minutes), 0
     if a == 'status':
         return session.status(project, args.as_of), 0
     if a == 'stage':

@@ -3,24 +3,35 @@ from .common import (ROOT, ensure_work, event, fingerprint, load_state, now, par
                      read_json, runtime_path, safe_path, state_path, write_json)
 
 
-def start(project, started_at=None, overall_end=None, practice=False, kind='generic'):
+def start(project, started_at=None, overall_end=None, practice=False, kind='generic',
+          work_minutes=None, oral_minutes=None, generation_reserve_minutes=None):
     if state_path(project).exists():
         raise ValueError('Session already exists; timers cannot be reset. Use a separate practice directory.')
     rules = read_json(ROOT / 'config/exam.json')
+    work = rules['work_minutes'] if work_minutes is None else work_minutes
+    oral = rules['oral_minutes'] if oral_minutes is None else oral_minutes
+    reserve = generation_reserve_minutes
+    if reserve is None:
+        reserve = rules['recommended_generation_reserve_minutes'] if oral else 0
+    for label, value, minimum in [('work_minutes', work, 1), ('oral_minutes', oral, 0),
+                                   ('generation_reserve_minutes', reserve, 0)]:
+        if type(value) is not int or value < minimum:
+            raise ValueError(label + ' must be an integer >= ' + str(minimum))
     started = parse_time(started_at) if started_at else now()
     end = parse_time(overall_end) if overall_end else (
         started + timedelta(minutes=240) if practice else parse_time(rules['overall_end']))
     if started >= end:
         raise ValueError('Task start must precede overall end')
-    hard = min(started + timedelta(minutes=rules['work_minutes']), end)
-    confirm = min(hard, end - timedelta(minutes=rules['oral_minutes'] + rules['recommended_generation_reserve_minutes']))
+    hard = min(started + timedelta(minutes=work), end)
+    confirm = min(hard, end - timedelta(minutes=oral + reserve))
     begin = confirm - timedelta(minutes=rules['recommended_submission_margin_minutes'])
     s = {'schema': 1, 'stage': 'work', 'kind': kind, 'practice': practice,
          'started_at': started.isoformat(), 'overall_end': end.isoformat(),
          'hard_work_end': hard.isoformat(), 'recommended_confirm_by': confirm.isoformat(),
          'recommended_submission_begin': begin.isoformat(),
-         'oral_minutes': rules['oral_minutes'],
-         'recommended_generation_reserve_minutes': rules['recommended_generation_reserve_minutes']}
+         'work_minutes': work, 'oral_minutes': oral,
+         'oral_timing_confirmed': oral_minutes is not None or rules.get('oral_timing_confirmed', True),
+         'recommended_generation_reserve_minutes': reserve}
     write_json(state_path(project), s)
     write_json(runtime_path(project, 'requirements.json'), [])
     event(project, 'start', {'practice': practice})
@@ -41,6 +52,8 @@ def status(project, as_of=None):
     def remaining(key):
         return round((parse_time(s[key]) - t).total_seconds() / 60, 2)
     warnings = []
+    if not s.get('oral_timing_confirmed', True):
+        warnings.append('Retest oral duration is unconfirmed; the oral reserve is provisional from the prior guide. Check current platform timing before relying on this estimate.')
     if parse_time(s['recommended_confirm_by']) < parse_time(s['started_at']):
         warnings.append('Late start: recommended oral/preparation reserve no longer fits.')
     if t < parse_time(s['started_at']):

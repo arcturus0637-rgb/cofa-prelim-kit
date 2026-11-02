@@ -1,14 +1,17 @@
 {
-  "event": "SK hynix AI hackathon second preliminary",
-  "overall_end": "2026-10-31T14:00:00+09:00",
-  "work_minutes": 180,
-  "oral_questions": 6,
+  "event": "SK hynix AI hackathon preliminary retest",
+  "overall_start": "2026-11-04T19:00:00+09:00",
+  "overall_end": "2026-11-04T23:00:00+09:00",
+  "work_minutes": 240,
+  "oral_questions": null,
   "oral_minutes": 30,
+  "oral_timing_confirmed": false,
   "recommended_generation_reserve_minutes": 10,
   "recommended_submission_margin_minutes": 10,
   "acquisition_policy": "git-clone-only",
   "source_notes": {
-    "official": "User-supplied brief p1 and detailed guide pp2-5. Work timer starts when task starts. Overall deadline applies to all stages. Preview timer continues; confirming submission locks files. Oral has no AI/paste.",
+    "prior_guide": "User-supplied original brief p1 and detailed guide pp2-5. Original event was Oct31,180min work and30min oral. Those dates are historical. Current platform rules prevail.",
+    "retest_user_report": "On Nov2 participant reports retest Wednesday Nov4 19:00-23:00 KST, four-hour limit, with written questions based on the implementation. The exact written/oral allocation is not specified;30min oral is provisional from the original guide, not confirmed for the retest.",
     "local_recommendation": "10-minute generation reserve is kit advice. Brief says about5 minutes; detailed guide shows up to10 minutes with possible retries. No fixed reserve guarantees completion. Submission10 minutes before work end is official recommendation.",
     "organizer_clarification_from_user": "Participant-created public GitHub toolkit may be cloned for the task."
   }

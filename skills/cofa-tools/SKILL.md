@@ -5,6 +5,8 @@ description: "Use when a COFA task needs React Flow node UIs, DuckDB tables, Mar
 
 # Select one concrete tool
 
+For optimization use `cofa-optimize` before choosing a solver; for shuttle/vehicle routing also use `cofa-routing`. OR-Tools remains optional. Modeling, feasibility checks and bounded stdlib alternatives do not require installing it. The fixed-pickup route checker validates only its explicit schema, never optimality.
+
 Read `.cofa-kit/docs/LIBRARIES.ko.md` and `config/libraries.lock.json` within the kit. Reuse task dependencies first. No library is necessary solely because it is bundled in this catalogue.
 
 Profiles: flow=`@xyflow/react`; web-test=`vitest`; analytics=`duckdb,networkx`; documents=`markitdown`; optimization=`ortools`; quality=`ruff`. `python .cofa-kit/kit.py libraries --profile <profile>` only inspects metadata in the current interpreter/project; it never installs or downloads. Metadata presence does not prove imports or execution work. Preserve provided versions and verify a small real operation only if already usable.

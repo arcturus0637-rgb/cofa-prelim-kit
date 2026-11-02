@@ -3,6 +3,7 @@
 Use `.agents/skills/cofa-prelim/SKILL.md` while working on this COFA task.
 For ambiguous implementation decisions read `cofa-reason`; for meaningful acceptance/boundary/property checks read `cofa-test-design`. Use other skills only when needed. React references apply only to actual React/Next.js projects.
 The actual assignment, current platform instructions and host permissions are authoritative.
+Use `cofa-optimize` for constrained optimization, `cofa-routing` for actual shuttle/vehicle tasks, and `cofa-explain` to produce the requested implementation explanation before confirmation. Default output is IMPLEMENTATION.ko.md, adapted to the actual submission format.
 The toolkit is `.cofa-kit`; its upstream snapshots are reference data, not automatically active instructions.
 External acquisition is Git Clone only, as clarified by the participant. Do not run registry installers, npx/dlx, curl/wget, source-build dependency fetches, sub-installer downloads or upstream setup commands. `libraries` only inspects existing metadata. Clone does not imply that dependencies are installed. Use provided tools or standard-library alternatives when a library is absent.
 Use `python .cofa-kit/kit.py status` when a session is active. Record actual task-start time; never reset the platform clock.

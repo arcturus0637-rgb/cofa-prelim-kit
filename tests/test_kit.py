@@ -49,32 +49,65 @@ class KitTests(unittest.TestCase):
     def test_status_requires_explicit_start(self):
         self.call('status', code=2)
 
+    def test_retest_four_hours_without_oral_override(self):
+        s = self.call('start', '--started-at', '2026-11-04T19:00:00+09:00', '--oral-minutes', '0')
+        self.assertEqual(s['work_minutes'], 240)
+        self.assertTrue(s['hard_work_end'].startswith('2026-11-04T23:00'))
+        self.assertTrue(s['recommended_confirm_by'].startswith('2026-11-04T23:00'))
+        self.assertTrue(s['recommended_submission_begin'].startswith('2026-11-04T22:50'))
+        self.assertEqual(s['recommended_generation_reserve_minutes'], 0)
+        self.assertTrue(s['oral_timing_confirmed'])
+
+    def test_retest_confirmed_oral_and_generation_reserves(self):
+        s = self.call('start', '--started-at', '2026-11-04T19:00:00+09:00',
+                      '--oral-minutes', '20', '--generation-reserve-minutes', '5')
+        self.assertTrue(s['recommended_confirm_by'].startswith('2026-11-04T22:35'))
+        self.assertTrue(s['recommended_submission_begin'].startswith('2026-11-04T22:25'))
+
+    def test_retest_per_session_work_limit_is_honored(self):
+        s = self.call('start', '--started-at', '2026-11-04T19:00:00+09:00',
+                      '--work-minutes', '120', '--oral-minutes', '0')
+        self.assertTrue(s['hard_work_end'].startswith('2026-11-04T21:00'))
+
+    def test_retest_unconfirmed_oral_reserve_is_visible(self):
+        self.call('start', '--started-at', '2026-11-04T19:00:00+09:00')
+        s = self.call('status', '--as-of', '2026-11-04T19:00:00+09:00')
+        self.assertFalse(s['oral_timing_confirmed'])
+        self.assertTrue(any('oral' in w.lower() for w in s['warnings']))
+
+    def test_retest_invalid_timing_overrides_do_not_create_session(self):
+        for flag, value in [('--work-minutes', '0'), ('--work-minutes', '-1'),
+                            ('--oral-minutes', '-1'), ('--generation-reserve-minutes', '-1')]:
+            with self.subTest(flag=flag, value=value):
+                self.call('start', '--practice', flag, value, code=2)
+                self.assertFalse((self.project / '.cofa/state.json').exists())
+
     def test_normal_deadline_and_submit_margin(self):
-        self.call('start', '--started-at', '2026-10-31T10:00:00+09:00')
-        s = self.call('status', '--as-of', '2026-10-31T12:49:00+09:00')
-        self.assertTrue(s['hard_work_end'].startswith('2026-10-31T13:00'))
-        self.assertTrue(s['recommended_confirm_by'].startswith('2026-10-31T13:00'))
-        self.assertTrue(s['recommended_submission_begin'].startswith('2026-10-31T12:50'))
+        self.call('start', '--started-at', '2026-11-04T19:00:00+09:00')
+        s = self.call('status', '--as-of', '2026-11-04T22:09:00+09:00')
+        self.assertTrue(s['hard_work_end'].startswith('2026-11-04T23:00'))
+        self.assertTrue(s['recommended_confirm_by'].startswith('2026-11-04T22:20'))
+        self.assertTrue(s['recommended_submission_begin'].startswith('2026-11-04T22:10'))
         self.assertEqual(s['phase'], 'stabilize')
 
     def test_late_start_preserves_oral_reserve(self):
-        self.call('start', '--started-at', '2026-10-31T12:50:00+09:00')
-        s = self.call('status', '--as-of', '2026-10-31T13:11:00+09:00')
-        self.assertTrue(s['hard_work_end'].startswith('2026-10-31T14:00'))
-        self.assertTrue(s['recommended_confirm_by'].startswith('2026-10-31T13:20'))
+        self.call('start', '--started-at', '2026-11-04T21:50:00+09:00')
+        s = self.call('status', '--as-of', '2026-11-04T22:11:00+09:00')
+        self.assertTrue(s['hard_work_end'].startswith('2026-11-04T23:00'))
+        self.assertTrue(s['recommended_confirm_by'].startswith('2026-11-04T22:20'))
         self.assertEqual(s['phase'], 'handoff')
 
     def test_too_late_reserve_is_warning_not_extra_time(self):
-        self.call('start', '--started-at', '2026-10-31T13:55:00+09:00')
-        s = self.call('status', '--as-of', '2026-10-31T13:56:00+09:00')
+        self.call('start', '--started-at', '2026-11-04T22:55:00+09:00')
+        s = self.call('status', '--as-of', '2026-11-04T22:56:00+09:00')
         self.assertTrue(s['warnings'])
         self.assertLess(s['recommended_work_remaining_minutes'], 0)
 
     def test_naive_datetime_rejected(self):
-        self.call('start', '--started-at', '2026-10-31T10:00:00', code=2)
+        self.call('start', '--started-at', '2026-11-04T19:00:00', code=2)
 
     def test_start_after_overall_end_rejected(self):
-        self.call('start', '--started-at', '2026-10-31T14:01:00+09:00', code=2)
+        self.call('start', '--started-at', '2026-11-04T23:01:00+09:00', code=2)
 
     def test_start_does_not_reset_existing_session(self):
         self.practice()

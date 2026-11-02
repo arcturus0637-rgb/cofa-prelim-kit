@@ -6,7 +6,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 KST = timezone(timedelta(hours=9))
-VERSION = '1.2.0'
+VERSION = '1.3.0'
 IGNORED_DIRS = {'.git', 'node_modules', '__pycache__', '.pytest_cache', '.ruff_cache', '.mypy_cache'}
 ROOT_IGNORED_DIRS = {'.cofa', '.cofa-kit', '.venv', '.venv-cofa', '.next', 'dist', 'build', 'coverage'}
 
@@ -19,7 +19,7 @@ def parse_time(value):
     try:
         t = datetime.fromisoformat(value.replace('Z', '+00:00'))
     except (ValueError, AttributeError) as e:
-        raise ValueError('Use ISO date/time with explicit timezone, e.g. 2026-10-31T10:00:00+09:00') from e
+        raise ValueError('Use ISO date/time with explicit timezone, e.g. 2026-11-04T19:00:00+09:00') from e
     if t.tzinfo is None:
         raise ValueError('Timezone offset is required')
     return t.astimezone(KST)
