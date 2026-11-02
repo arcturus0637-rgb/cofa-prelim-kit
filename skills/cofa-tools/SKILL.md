@@ -5,7 +5,7 @@ description: "Use when a COFA task needs React Flow node UIs, DuckDB tables, Mar
 
 # Select one concrete tool
 
-For optimization use `cofa-optimize` before choosing a solver; for shuttle/vehicle routing also use `cofa-routing`. OR-Tools remains optional. Modeling, feasibility checks and bounded stdlib alternatives do not require installing it. The fixed-pickup route checker validates only its explicit schema, never optimality.
+For optimization use `cofa-optimize` before choosing a solver and `cofa-opt-service` to build the actual input-to-result service. OR-Tools remains optional. Modeling, task-specific checks and bounded stdlib alternatives do not require installing it. No general-purpose optimality checker or finished optimization service is bundled.
 
 Read `.cofa-kit/docs/LIBRARIES.ko.md` and `config/libraries.lock.json` within the kit. Reuse task dependencies first. No library is necessary solely because it is bundled in this catalogue.
 

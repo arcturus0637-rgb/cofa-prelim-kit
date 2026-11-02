@@ -6,7 +6,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 KST = timezone(timedelta(hours=9))
-VERSION = '1.3.0'
+VERSION = '1.4.0'
 IGNORED_DIRS = {'.git', 'node_modules', '__pycache__', '.pytest_cache', '.ruff_cache', '.mypy_cache'}
 ROOT_IGNORED_DIRS = {'.cofa', '.cofa-kit', '.venv', '.venv-cofa', '.next', 'dist', 'build', 'coverage'}
 

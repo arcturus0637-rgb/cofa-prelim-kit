@@ -1,39 +1,21 @@
-# Build the model from the assignment
+# Model the decision and original requirements
 
-## Classify the decision, not the picture
-
-| Actual decision | Candidate model | Frequent wrong shortcut |
+| Decision structure | Candidate method | Check before choosing |
 |---|---|---|
-| One path between two fixed vertices | Shortest path | Treating many-bus assignment as one shortest path |
-| Assign workers/jobs to limited resources | Assignment, matching, min-cost flow, MIP/CP-SAT | Greedy nearest assignment despite capacities |
-| Select sites/stops to cover demand | Set cover, facility location, p-median/p-center as appropriate | Clustering employees and declaring coverage satisfied |
-| Order visits for one/multiple vehicles | TSP/VRP; add actual capacity/time/endpoint restrictions | Optimizing each route without global demand coverage |
-| Choose start times with dependencies and limited resources | Scheduling, CP-SAT, interval/flow methods | Sorting by duration while ignoring availability |
-| Allocate divisible quantities under linear constraints | LP; MIP if integrality is required | Rounding a continuous solution and assuming feasibility |
-| Small discrete state/sequence with reusable substructure | Dynamic programming or bounded exact search | Enumerating permutations regardless of size |
+| Linear objective/constraints, divisible variables | LP | Affineness, domains, feasibility/boundedness |
+| Binary/integer choices or logical conditions | MIP, CP/CP-SAT, exact combinatorial algorithm | Integrality, valid bounds, correct implications |
+| Pair eligible entities with costs | Matching, assignment, min-cost flow | Capacities, eligibility, full coverage, side constraints |
+| Network capacities/conservation | Flow/shortest path as appropriate | Direction, negative costs/cycles, conservation |
+| Select a subset under resources/coverage | DP, MIP, CP, branch-and-bound | State size, coverage vs partition, interaction costs |
+| Start times, precedence, shared resources | CP, interval/flow methods, MIP | Availability, overlap, durations and deadlines |
+| Repeated discrete substructure | DP or bounded search | Complete state captures future consequences |
+| Smooth convex/nonconvex continuous objective | Convex solver or nonlinear method | Actual convexity, derivatives, domain and guarantee |
+| Several competing objectives | Lexicographic, epsilon-constraint, justified scalarization | Required priorities vs sampled tradeoffs |
 
-Do not use an exact-sounding model name as evidence the implementation matches the task. A combined stop-selection, employee-assignment and routing problem contains several coupled decisions. Decomposition is a method with possible tradeoffs, not a proof that the parts optimize the whole.
+Continuous variables alone do not make a problem linear. A combined problem can couple decisions; optimizing parts separately need not optimize the whole. Avoid arbitrary size thresholds and do not choose a solver from the visual presentation alone.
 
-## Model contract
+Record decisions/domains, fixed inputs, eligibility, mandatory coverage, reuse/splitting policies, hard constraints, soft preferences, objective direction, units and numerical tolerances. Identify the actual enforcement/check for every hard requirement. Do not silently convert a requirement into a penalty. For lexicographic objectives preserve earlier optimum values in later stages; an arbitrary huge coefficient can change priorities or overflow.
 
-For each hard requirement identify its actual enforcement and independent check. Record:
+Audit IDs and explicit index maps, missing/duplicate values, NaN/infinity, invalid signs, matrix shapes, directionality, units and unavailable choices. Preserve distinct records even when their attributes coincide. Zero is not missing unless specified. Check cheap necessary conditions such as aggregate capacity and per-item eligibility, but passing them is not a feasibility proof. A greedy failure is not an infeasibility proof.
 
-- What each entity and ID represents: employee, stop, vehicle, company, job or time slot. Preserve distinct records even at identical coordinates. Map IDs to matrix indices explicitly.
-- What decisions may change, which inputs are fixed and which assignments are eligible.
-- Whether every demand is mandatory, whether splitting/reassignment is permitted and whether a resource can be reused over time.
-- Capacity units, time zone, travel/service/waiting time, money, precision and objective direction.
-- Whether fairness, walking distance, maximum ride time, lateness or vehicle count is a hard limit, a soft cost or absent from the task.
-- Objective order: scalar weighted sum, lexicographic priorities or several reported metrics. Do not invent weights. A lexicographic objective can be implemented in stages that preserve earlier optimum values; using a huge arbitrary coefficient can overflow or distort the objective.
-- What output must contain, what happens to infeasible/unserved demand and what evidence supports completion.
-
-## Input checks and cheap necessary conditions
-
-Check missing/duplicate IDs, NaN/infinity, invalid negative values, coordinate order/projection, matrix dimensions, directionality and unreachable pairs. Zero is not a missing-data marker unless specified. A disconnected arc is not a free connection. Never invent live road times or silently replace provided travel data with Euclidean distance.
-
-Compare total demand with available capacity when each vehicle is used once, verify each indivisible group fits at least one eligible resource, and test time reachability. Necessary checks can establish particular contradictions; passing them does not establish feasibility. Fleet reuse, employee splitting and pickup/dropoff loads change those tests and must come from the contract.
-
-CP-SAT uses integer model data. Choose an explicit exact scale where possible, check coefficient bounds and units, and document rounding/tolerance where unavoidable. Rounding resource use down or deadline travel down can fabricate feasibility. Rounding a continuous solution does not preserve general constraints. Validate the returned solution against the original units and business rules.
-
-## Scope and clarification
-
-Preserve provided architecture and data sources. During the event, use permitted local/provided data and Git Clone acquisition only. Employee locations and generated routes stay inside the task. An external mapping/geocoding/optimization API is not an implicit option. Missing information should become a narrow permitted clarification or a labeled assumption, not a hidden policy.
+Use valid bounds for linearization. For integer-only APIs choose an explicit scale, check coefficient bounds, and validate in original units: rounding can fabricate feasibility. Keep input/model assumptions visible and task data local. Use permitted clarification for decision-changing ambiguity; otherwise state a narrow assumption. Preserve the supplied stack and data sources.

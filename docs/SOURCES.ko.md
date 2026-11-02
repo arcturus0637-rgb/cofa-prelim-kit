@@ -30,8 +30,8 @@
 
 README의 라이선스 예외와 각 파일의 선언을 확인하세요. 루트 MIT는 CC BY-SA 원본이나 그 각색본의 조건을 대체하지 않습니다.
 
-## v1.3 최적화·노선·구현 설명
+## v1.4 범용 최적화와 서비스 구현
 
-`cofa-optimize`, `cofa-routing`, `cofa-explain`, 제한된 고정 정류장 검사기와 테스트는 이 키트에서 작성한 MIT 자료입니다. OR-Tools 공식 문서의 용량·시간창·탐색 제한·방문 생략·CP-SAT 상태를 확인하고 독립적으로 정리했습니다. 근거 URL은 `skills/cofa-optimize/references/methods.md`에 있습니다. 새로운 제3자 스냅샷, 솔버 실행 코드/바이너리, 지도 API나 개인 설정은 추가하지 않았습니다. 기존 OR-Tools 목록은 제공 환경의 설치 상태를 확인하는 참고자료입니다.
+새 MIT 원본 두 곳: [combinatorial-optimization-skills](https://github.com/hajibabaie/combinatorial-optimization-skills)의 범용 SKILL.md 12개와 [scientific-agents](https://github.com/K-Dense-AI/scientific-agents)의 optimization-scientist SKILL.md 1개를 보관했습니다. 각 루트 LICENSE/LICENSE.md와 원문 바이트를 유지했습니다. 선택·제외 사유와 범위는 [OPTIMIZATION.ko.md](OPTIMIZATION.ko.md), 실제 참조 경로와 보정은 cofa-optimize의 source-guide에 있습니다.
 
-이전 문제는 직원 출퇴근 버스 노선 최적화였다는 사용자 설명만 활용했습니다. 실제 이전/재시험 문제 파일·데이터·답안·완성 서비스는 이 저장소에 포함하지 않습니다. 재시험 일정은 11월2일 사용자 전달 사항이며 원예선 PDF와 구분합니다.
+`cofa-optimize`, `cofa-opt-service`, `cofa-explain`은 이 키트의 MIT 각색/연결 지침입니다. 원본을 그대로 활성화하거나 예제 결과로 실제 과제를 대체하지 않습니다. 버스 전용 스킬·검사기·전용 테스트는 v1.4에서 제거했습니다. 새 솔버 바이너리, 외부 계정/서비스, 완성 앱은 추가하지 않았습니다. 재시험 일정은 11월2일 사용자 전달 사항이며 원예선 PDF와 구분합니다.

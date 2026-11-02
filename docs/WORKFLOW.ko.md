@@ -16,7 +16,7 @@ python .cofa-kit/kit.py note --kind decision --text "선택한 방법과 실제 
 python .cofa-kit/kit.py require --id R1 --status implemented
 ```
 
-최적화 과제는 `cofa-optimize`로 결정변수·제약·목표·단위와 가능해 기준을 정합니다. 실제 버스/배차는 `cofa-routing`으로 정류장 선택·직원 배정·방문 순서·시간을 구분합니다. 새 시험도 같은 문제라고 단정하지 않습니다.
+최적화 과제는 `cofa-optimize`로 결정변수·제약·목표·단위와 가능해 기준을 정합니다. `cofa-opt-service`로 실제 입력·모델·계산·독립 검사를 API/화면과 필수 저장/내보내기에 연결합니다. 공개 스킬의 예제 출력으로 실제 과제를 대체하지 않습니다. 새 시험도 같은 문제라고 단정하지 않습니다.
 
 ## 오류가 날 때
 

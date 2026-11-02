@@ -123,5 +123,42 @@
     "mode": "passive-reference",
     "fetched_at": "2026-10-30T15:54:20.644436+00:00",
     "license_note": "MIT declared in SKILL frontmatter; no source license file at pinned commit"
+  },
+  {
+    "id": "combinatorial",
+    "repository": "https://github.com/hajibabaie/combinatorial-optimization-skills",
+    "commit": "8b67011dbaa54809a67af6c77c06809bfadc44d1",
+    "selected_paths": [
+      "LICENSE",
+      "skills/linear-programming-fundamentals/SKILL.md",
+      "skills/integer-programming-techniques/SKILL.md",
+      "skills/linearization-techniques/SKILL.md",
+      "skills/branch-and-bound/SKILL.md",
+      "skills/constraint-programming/SKILL.md",
+      "skills/dynamic-programming/SKILL.md",
+      "skills/network-flow-optimization/SKILL.md",
+      "skills/assignment-problems/SKILL.md",
+      "skills/solution-validation-testing/SKILL.md",
+      "skills/open-source-solvers/SKILL.md",
+      "skills/multi-objective-optimization/SKILL.md",
+      "skills/optimization-project-structure/SKILL.md"
+    ],
+    "snapshot": "upstream/combinatorial",
+    "mode": "passive-reference",
+    "fetched_at": "2026-11-02T05:39:53.647497+00:00",
+    "license_note": "MIT; original license and source bytes preserved. See local adaptation corrections."
+  },
+  {
+    "id": "optimization-scientist",
+    "repository": "https://github.com/K-Dense-AI/scientific-agents",
+    "commit": "98c7fae46648724e1a43a1f2b207b0c82fcc462e",
+    "selected_paths": [
+      "LICENSE.md",
+      "scientific-agents/optimization-scientist/skills/optimization-scientist/SKILL.md"
+    ],
+    "snapshot": "upstream/optimization-scientist",
+    "mode": "passive-reference",
+    "fetched_at": "2026-11-02T05:39:53.753528+00:00",
+    "license_note": "MIT; original license and source bytes preserved. See local adaptation corrections."
   }
 ]
